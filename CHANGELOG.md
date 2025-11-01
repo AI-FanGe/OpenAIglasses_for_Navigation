@@ -1,4 +1,5 @@
 # 更新日志
+[🇬🇧 English Version here](CHANGELOG_en.md)
 
 本文档记录项目的所有重要变更。
 

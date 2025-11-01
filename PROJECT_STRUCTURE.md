@@ -1,4 +1,5 @@
 # 项目结构说明
+[🇬🇧 English Version here](PROJECT_STRUCTURE_en.md)
 
 本文档详细说明项目的目录结构和主要文件的作用。
 

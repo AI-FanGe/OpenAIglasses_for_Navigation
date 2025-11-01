@@ -1,4 +1,5 @@
 # AI 智能盲人眼镜系统 🤖👓
+[🇬🇧 English Version here](README_en.md)
 
 <div align="center">
 
