@@ -1,0 +1,59 @@
+services:
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=aiglass_db
+      - POSTGRES_USER=aiglass_user
+      - POSTGRES_PASSWORD=aiglass_password
+    restart: always
+    networks:
+      - aiglass_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aiglass_user -d aiglass_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    # Overriding entrypoint to fix line endings AT RUNTIME since the host volume mount
+    # overwrites the container's dos2unix-fixed file with Windows CRLF files.
+    entrypoint: ["sh", "-c", "dos2unix /app/entrypoint.sh && bash /app/entrypoint.sh"]
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=aiglass_db
+      - DB_USER=aiglass_user
+      - DB_PASS=aiglass_password
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - aiglass_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - aiglass_network
+
+networks:
+  aiglass_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
