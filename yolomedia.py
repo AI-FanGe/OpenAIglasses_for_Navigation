@@ -254,6 +254,11 @@ def _init_font():
         r"C:\\Windows\\Fonts\\simfang.ttf",
         r"C:\\Windows\\Fonts\\simsun.ttc",
         r"C:\\Windows\\Fonts\\simsunb.ttf",
+        "/System/Library/Fonts/PingFang.ttc",
+        "/System/Library/Fonts/STHeiti Light.ttc",
+        "/System/Library/Fonts/STHeiti Medium.ttc",
+        "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+        "/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc",
     ]
     for p in candidates:
         if os.path.exists(p):
